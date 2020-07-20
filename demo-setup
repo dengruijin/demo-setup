@@ -1,0 +1,15 @@
+#!/bin/sh
+
+scriptdir="$(dirname "$0")"
+otopidir="${scriptdir}"
+extraenv=""
+
+if [ -x "${scriptdir}/otopi" ]; then
+	otopidir="${scriptdir}"
+else
+	otopidir="/usr/sbin"
+fi
+
+extraenv="\"PREPEND:BASE/pluginPath=str:${scriptdir}/otopi-plugins\""
+exec "${otopidir}/otopi" "${extraenv} APPEND:BASE/pluginGroups=str:installer:$*"
+
